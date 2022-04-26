@@ -1,0 +1,7 @@
+
+
+A cliens/react oldalon:
+
+-	npm install ( a modulokat telepíti natúr)
+-	npm install react-hook-form (Bejelentkezés, Regisztrációhoz a minta/form)
+-	

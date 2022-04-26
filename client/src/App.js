@@ -1,0 +1,75 @@
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
+import "./App.css";
+import { TopBar } from "./components/TopBar";
+import { Home } from "./components/Home";
+//import { SingleRecipe } from "./components/SingleRecipe";
+import { Contact } from "./components/Contact";
+import { Upload } from "./components/Upload";
+import { Register } from "./components/Register";
+import { Settings } from "./components/Settings";
+import { Login } from "./components/Login";
+//import { Recipes } from "./components/Recipes";
+import { Logout } from "./components/Logout";
+import { Single } from "./components/Single";
+import { WelcomePage } from "./components/WelcomePage";
+import { EditRecipe } from "./components/EditRecipe";
+import { Myrecipes } from "./components/Myrecipes";
+import axios from "axios";
+import {ConfirmProvider} from 'material-ui-confirm'
+
+function App() {
+  const [user, setUser] = useState(localStorage.getItem('user')?localStorage['user']:false);
+  const [categ,setCateg] = useState([])
+  const [userName, setUserName] = useState(localStorage.getItem('userName')?localStorage['userName']:'');
+  const [userId, setUserId] = useState(localStorage.getItem('userId')?localStorage['userId']:0);
+
+
+  useEffect(()=>{
+    fetchCateg()
+  },[])
+
+  useEffect(()=>{
+    localStorage.setItem('user',user)
+    localStorage.setItem('userName',userName)
+    localStorage.setItem('userId',userId)
+  },[user,userName,userId])
+
+
+  const fetchCateg=async () => {
+    let url='http://localhost:5000/categ'
+    try{
+      const resp=await axios.get(url)
+      console.log(resp.data)
+      setCateg(resp.data)
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+
+  return (
+    <ConfirmProvider>
+      <BrowserRouter>
+        <TopBar user={user} userName={userName}/>
+        <Routes>
+          <Route path="/" element={<Home categ={categ} userId={userId}/>} />
+          <Route path="/myrecipes" element={<Myrecipes categ={categ} userId={userId} />} />
+          <Route path="/recipes/:recipeId" element={<Single categ={categ} userId={userId} />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/upload" element={userName ? <Upload userId={userId} categ={categ} /> : <Register />} />
+          <Route path="/settings" element={user ? <Settings /> : <Register />}/>
+          <Route path="/login" element={ userName ? <Home categ={categ} /> : <Login setUser={setUser} setUserName={setUserName} setUserId={setUserId}/>} />
+          <Route path="/register" element={userName ? <Home  categ={categ} /> : <Register />} />
+          <Route path="/logout" element={<Logout categ={categ} setUser={setUser} setUserName={setUserName} setUserId={setUserId} />} />
+          <Route path="/confirm/:confirmationCode" element={<WelcomePage setUser={setUser}/>} />
+          <Route path="/editRecipe/:recipeId" element={user? <EditRecipe userId={userId} categ={categ}/> : <Login/>} />
+        </Routes>
+      </BrowserRouter>
+      </ConfirmProvider>
+  );
+}
+
+export default App;
