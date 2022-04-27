@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React,{useState} from 'react'
 import {useForm} from 'react-hook-form'
 import axios from 'axios'
@@ -82,6 +83,14 @@ console.log('A fájl mérete:',selFile.length>0 ? selFile[0].sizeReadable : 0)
             </form>
             
 
+=======
+import React from 'react'
+
+export const Upload=()=> {
+  return (
+    <div>
+      write ....
+>>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
     </div>
   )
 }

@@ -1,7 +1,10 @@
 * {
   font-family: "Montserrat", sans-serif;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
 /* TopBar.js*/
 .top-img {
   width: 40px;
@@ -16,6 +19,7 @@
 /* Header.js*/
 .headerImg {
   width: 100%;
+<<<<<<< HEAD
   height: 300px;
   object-fit: cover;
   margin-top: 20px;
@@ -27,6 +31,30 @@
   font-size:100px;
 }
 
+=======
+  height: 500px;
+  object-fit: cover;
+  margin-top: 50px;
+}
+.title1 {
+  
+  position: absolute;
+  top: 8%;
+  font-size: 20px;
+}
+.title2 {
+  justify-content: center;
+  position: absolute;
+  top: 20%;
+  font-size: 80px;
+}
+.title3{
+  justify-content: center;
+  position: absolute;
+  top: 35%;
+  font-size: 35px;
+}
+>>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
 
 /*Recipes*/
 .recipes {
@@ -39,7 +67,11 @@
   margin-top: 5%;
 }
 .sidebar {
+<<<<<<< HEAD
   flex: 3; /*a side szélességét határozza meg*/
+=======
+  flex: 3; /*a side széllességét határozza meg*/
+>>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
 }
 .sidebarlist {
   list-style-type: disc; /*listaelemek formázása*/
@@ -99,16 +131,23 @@ p::first-letter{
 }*/
 
 .register, .login{
+<<<<<<< HEAD
   background-image: url(../public/img/Register.jpg);
   height: 100vw;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat
+=======
+  background-image: url(../public/img/registration.jpg);
+  height: 100vh;
+  object-fit: cover; /*a közepe, a hasznos része jelenjen meg*/
+>>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
 
 }
 .err{
   color: red;
   font-size: 0.8rem;
+<<<<<<< HEAD
   height: 2rem;
 }
 
@@ -132,6 +171,14 @@ p::first-letter{
   }
 
 
+=======
+}
+
+.write img{
+  height: 300px;
+  object-fit: cover;
+}
+>>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
 
 
 
