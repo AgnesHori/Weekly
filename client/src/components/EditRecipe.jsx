@@ -22,7 +22,7 @@ export const EditRecipe=({userId,categ})=> {
 
   const fetchRecipe = async () => {
     try {
-        const resp = await axios.get(`http://localhost:5000/recipes/${params.recipeId}`);
+        const resp = await axios.get(`/recipes/${params.recipeId}`);
         console.log('válasz:',resp.data[0])
         setRecipe(resp.data[0])
     } catch (err) {
@@ -32,7 +32,7 @@ export const EditRecipe=({userId,categ})=> {
 
   const onSubmit = (data) => {
    console.log('adatok-cliens oldalon:',data);
-   const url=`http://localhost:5000/recipes/${params.recipeId}`
+   const url=`/recipes/${params.recipeId}`
     sendData(url,data)
     reset()
   
@@ -53,7 +53,7 @@ console.log('editrecipe',recipe)
 console.log('recipecateg=',recipeCateg)
   return (
     <div className="row justify-content-center mx-auto w-75 write" >
-           {recipe.image_url && <img src={require('../../../server/public/images/'+ recipe.image_url)}  alt="" className="  border p-0 rounded-3" />}
+           {recipe.image_url && <img src={recipe.image_url}  alt="" className="  border p-0 rounded-3" />}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="d-flex align-items-center">
                     <input type="text" className="form-control m-2" placeholder="cím" 

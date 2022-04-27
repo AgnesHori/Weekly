@@ -112,10 +112,26 @@ p::first-letter{
   height: 2rem;
 }
 
-.upload img{
-  height: 300px;
+/*upload*/
+.upload .header-img{
+  height:300px;
   object-fit: cover;
-}
+  
+  }
+  .files-gallery{
+  width: 80px!important;
+  height: 80px!important;
+  }
+
+  .upload .recipeTitle{
+  max-width: 300px;
+  }
+
+  .drop-btn{
+  max-height: 35px;
+  }
+
+
 
 
 

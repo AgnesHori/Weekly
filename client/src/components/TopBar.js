@@ -1,8 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { TopBarSearch } from "./TopBarSearch";
 import avatar from './avatar.svg'
 
-export const TopBar = ({ user, userName }) => {
+export const TopBar = ({ user, userName,recipes }) => {
+  console.log('TopBar:',user,userName,recipes)
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -44,7 +46,7 @@ export const TopBar = ({ user, userName }) => {
                   <NavLink to="/logout" className="nav-link" href="#">Kijelentkezés</NavLink></li>)}
             </ul>
           </div>
-          <i className="search-icon fa-solid fa-magnifying-glass"></i>
+              <TopBarSearch placeholder="Recept keresése..." recipes={recipes} />
           <div>
             {user && (
               <NavLink to="/settings"><img className="top-img" src={avatar} alt={userName} title={userName} /></NavLink>)}

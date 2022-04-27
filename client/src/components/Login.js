@@ -15,7 +15,7 @@ export const Login=({setUser,setUserName,setUserId})=> {
 
   const onSubmit = (data) =>{
     console.log(data);
-    let url='http://localhost:5000/auth/login'
+    let url='/auth/login'
     sendData(url,data)
   } 
 

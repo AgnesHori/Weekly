@@ -1,11 +1,13 @@
 const mysql =require('mysql');
 const configDb=require('../configDB')
 const db=mysql.createConnection(configDb)
+const cloudinary = require('cloudinary').v2;
+const {upload} = require('../cloudinay')
 
 
 
 const getRecipes=(req,res)=>{
-    db.query(`SELECT r.recipes_id,r.title,r.image_url,r.body, u.user_name, co.occasion, ct.type, cs.diet,
+    db.query(`SELECT r.recipes_id,r.title,r.image_url,r.body,image_id, u.user_name, co.occasion, ct.type, cs.diet,
                 r.categ_occ_id, r.categ_types_id, r.categ_spec_id
                 FROM recipes r
                 LEFT JOIN categ_occ co ON r.categ_occ_id = co.categ_occ_id
@@ -22,14 +24,14 @@ const getRecipes=(req,res)=>{
 
 const getRecipe=(req,res)=>{
     const {id}=req.params
-    db.query(`SELECT r.user_id, r.recipes_id,r.title,r.image_url,r.body, u.user_name, co.occasion, ct.type,cs.diet,r.categ_occ_id, 
+    db.query(`SELECT r.user_id, r.recipes_id,r.title,r.image_url,r.body,r.image_id, u.user_name, co.occasion, ct.type,cs.diet,r.categ_occ_id, 
                 r.categ_types_id, r.categ_spec_id 
                 FROM recipes r 
                 LEFT JOIN categ_occ co ON r.categ_occ_id = co.categ_occ_id 
                 LEFT JOIN categ_types ct ON ct.categ_types_id = r.categ_types_id 
                 LEFT JOIN categ_special cs ON cs.categ_special_id = r.categ_spec_id 
                 LEFT JOIN users u ON u.user_id = r.user_id 
-                WHERE r.recipes_id =${id}`,(err,result)=>{
+                WHERE r.recipes_id=${id}`,(err,result)=>{
                 if(err) 
                     console.log(err)
                 else
@@ -65,18 +67,21 @@ const getRecipesFiltered=(req,res)=>{
             })
 }
 
-const createRecipe=(req,res)=>{
+const createRecipe=async (req,res)=>{
     console.log(req.body)
     const {title, categ_occ_id,body, user_id}=req.body
     const {image_url}=req.files
-    console.log('feltöltött kép:',image_url)
-    const fileName=user_id+'-'+image_url.name
-    image_url.mv('./public/images/'+fileName)
+    const fileTypes=['image/jpeg','image/png','image/jpg']
+    const fileSize=1024
+    if(!fileTypes.includes(image_url.mimetype)) return res.send('Image format not supported: jpg, png, jpeg');
+    if(image_url.size/1024>fileSize) return res.send(`Image should be less than ${fileSize}kb`)
+    const cloudFile=await upload(image_url.tempFilePath)
+    console.log(cloudFile)
     let actualDate=new Date()
     actualDate=actualDate.toISOString().split('T')[0] + ' ' + actualDate.toTimeString().split(' ')[0]
     console.log(actualDate)
-    db.query('insert into recipes (user_id,title,categ_occ_id,body,image_url,created_at) values (?,?,?,?,?,?)',
-        [user_id,title,categ_occ_id,body,fileName,actualDate],
+    db.query('insert into recipes (user_id,title,categ_occ_id,body,image_url,created_at,image_id) values (?,?,?,?,?,?,?)',
+        [user_id,title,categ_occ_id,body,cloudFile.url,actualDate,cloudFile.public_id],
         (err,result)=>{ //vessző után callback fv., megmondjuk, hogy mi történjen az insert után
             if(err){
                 console.log('Hiba a beszúrásban:',err)
@@ -110,7 +115,8 @@ const updateRecipe=(req,res) => {
 }
 
 const deleteRecipe=(req,res) => {
-    const {id}=req.params
+    const {id,imageId}=req.params
+    cloudinary.uploader.destroy(imageId)
     db.query('DELETE from recipes where recipes_id=?',[id],
         (err,result)=>{
             if(err){
@@ -124,16 +130,16 @@ const deleteRecipe=(req,res) => {
 }
 
 const getUserRecipes=(req,res) => {
-    const {id}=req.params
+    const {user_id}=req.params
     console.log("getUserRecipes", req.params)
-    db.query(`SELECT r.user_id, r.recipes_id,r.title,r.image_url,r.body, u.user_id, u.user_name, co.occasion, ct.type, cs.diet,
+    db.query(`SELECT r.user_id, r.recipes_id,r.title,r.image_url,r.body,r.image_id, u.user_id, u.user_name, co.occasion, ct.type, cs.diet,
                 r.categ_occ_id, r.categ_types_id, r.categ_spec_id
                 FROM recipes r
                 LEFT JOIN categ_occ co ON r.categ_occ_id = co.categ_occ_id
                 LEFT JOIN categ_types ct ON ct.categ_types_id = r.categ_types_id
                 LEFT JOIN categ_special cs ON cs.categ_special_id = r.categ_spec_id
                 LEFT JOIN users u ON u.user_id = r.user_id
-                WHERE u.user_id=${id}`,(err,results)=>{
+                WHERE u.user_id=${user_id}`,(err,results)=>{
                 if(err) 
                     console.log(err)
                 else
@@ -143,9 +149,9 @@ const getUserRecipes=(req,res) => {
 }
 
 const getUserRecipesFiltered=(req,res) => {
-    const {categ_id}=req.params //u.user_id
-    const {user_id}=req.params //categ_occ_id 
-    db.query(`SELECT r.user_id, r.recipes_id,r.title,r.image_url,r.body, u.user_id, u.user_name, 
+    const {categ_id}=req.params //categ_occ_id
+    const {user_id}=req.params //u.user_id
+    db.query(`SELECT r.user_id, r.recipes_id,r.title,r.image_url,r.body,r.image_id, u.user_id, u.user_name, 
                 co.occasion, ct.type, cs.diet, r.categ_occ_id, r.categ_types_id, r.categ_spec_id
                 FROM recipes r
                 LEFT JOIN categ_occ co ON r.categ_occ_id = co.categ_occ_id

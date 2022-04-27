@@ -24,7 +24,7 @@ useEffect (()=>{
       } = useForm();
   const onSubmit = (data) =>{
     console.log(data)
-    const url='http://localhost:5000/auth/register'
+    const url='/auth/register'
     sendData(url,data)
   }
 
@@ -37,7 +37,7 @@ useEffect (()=>{
 
   const checkUsername=(e)=>{
     if(e.target.value.length>0){
-      const url='http://localhost:5000/auth/checkUsername'
+      const url='/auth/checkUsername'
       sendUsername(url,{"user_name":e.target.value})
     }
   }
@@ -49,7 +49,7 @@ useEffect (()=>{
 
   const checkEmail=(e)=>{
     if(e.target.value.length>0){
-      const url='http://localhost:5000/auth/checkEmail'
+      const url='/auth/checkEmail'
       sendEmail(url,{"email": e.target.value})
     }
   }

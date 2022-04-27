@@ -6,7 +6,7 @@ export const WelcomePage=({setUser})=>{
     const params=useParams()
     console.log('Cliens oldal:',params.confirmationCode)
     setUser(false)
-    const url='http://localhost:5000/auth/confirm/'
+    const url='/auth/confirm/'
     useEffect(()=>{
         verifyUser(url,params.confirmationCode)
     },[])

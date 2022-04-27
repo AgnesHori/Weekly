@@ -12,13 +12,15 @@ export const Myrecipes=({categ,userId})=> {
     fetchRecipes()
   },[selCateg])
 
+  console.log('userid',userId)
 
   const fetchRecipes=async ()=>{
+
     let url=''
       if(selCateg === 0)
-        url=`http://localhost:5000/recipes/${userId}`
+        url=`/recipes/user/${userId}`
     else
-        url=`http://localhost:5000/recipes/${userId}/categ/` + selCateg
+        url=`/recipes/user/${userId}/categ/` + selCateg
         
         console.log('user:',userId,'kategória:',selCateg, url)
     try {

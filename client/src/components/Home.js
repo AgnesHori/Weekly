@@ -4,8 +4,8 @@ import { Recipes } from './Recipes'
 import { Sidebar} from './Sidebar'
 import axios from 'axios'
 
-export const Home=({categ})=> {
-  const [recipes,setRecipes]=useState([])
+export const Home=({categ,recipes,setRecipes})=> {
+  
   const [selCateg, setSelCateg]=useState(0)
 
   useEffect(()=>{
@@ -16,9 +16,9 @@ export const Home=({categ})=> {
   const fetchRecipes=async ()=>{
     let url=''
       if(selCateg === 0)
-        url='http://localhost:5000/recipes'
+        url='/recipes'
       else
-        url='http://localhost:5000/recipes/categ/' + selCateg
+        url='/recipes/categ/' + selCateg
 
     try{
       const resp=await axios.get(url)

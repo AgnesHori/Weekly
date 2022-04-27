@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import {Home} from './Home'
 
-export const Logout=({setUser,categ,setUserName,setUserId})=> {
+export const Logout=({setUser,categ,setUserName,setUserId,recipes,setRecipes})=> {
   
   useEffect(()=>{
      setUser(false)
@@ -14,7 +14,7 @@ export const Logout=({setUser,categ,setUserName,setUserId})=> {
  
   return (
     <>
-    <Home categ={categ}/>
+    <Home categ={categ} recipes={recipes} setRecipes={setRecipes}/>
     </>
   )
 }
