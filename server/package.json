@@ -4,19 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "start": "node index.js",
     "startDev": "nodemon index.js"
-=======
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon index.js"
->>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.29.1",
     "cors": "^2.8.5",
@@ -26,11 +20,6 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemailer": "^6.7.3",
-=======
-    "cors": "^2.8.5",
-    "express": "^4.17.3",
-    "mysql": "^2.18.1",
->>>>>>> ee2e32a4afc341dcecdaa90c19fb8ebb1723f5da
     "nodemon": "^2.0.15"
   }
 }
