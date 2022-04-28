@@ -2,7 +2,8 @@ const mysql =require('mysql');
 const configDb=require('../configDB')
 const db=mysql.createConnection(configDb)
 const {myToken}=require('../model/token')
-const sendConfirmationEmail=require('../model/sendConfirmationEmail')
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const bcrypt = require('bcryptjs')
 const saltRounds=10
@@ -26,7 +27,25 @@ const register=(req,res)=>{
             if(result){
                 console.log('Sikeres beszúrás',result.insertId)
                 //itt történik a mail küldés
-                sendConfirmationEmail(user_name,email,token)
+                const msg = {
+                    to: email,
+                    from: process.env.VERIFIED_EMAIL, // Use the email address or domain you verified above
+                    subject: 'Regisztráció aktiválása ',
+                    text: 'Kattints az aktiváló linkre!',
+                    html: `<p>Fiókod aktiválásához kattints ide: <strong><a href="https://weeklyrecipes.herokuapp.com/#/confirm/
+                    ${token}">Aktiválás</a></strong>`,
+                  };
+                  //ES8
+                  (async () => {
+                    try {
+                      await sgMail.send(msg);
+                    } catch (error) {
+                      console.error(error);
+                      if (error.response) {
+                        console.error(error.response.body)
+                      }
+                    }
+                  })();
                 res.send({message:`Kattintson az emailben érkezett linkre a regisztráció aktiválásához!`})
             }
         })

@@ -149,8 +149,8 @@ const getUserRecipes=(req,res) => {
 }
 
 const getUserRecipesFiltered=(req,res) => {
-    const {categ_id}=req.params //categ_occ_id
-    const {user_id}=req.params //u.user_id
+    const {categ_id,user_id}=req.params //categ_occ_id, user_id
+    console.log('myrecipe:',req.params)
     db.query(`SELECT r.user_id, r.recipes_id,r.title,r.image_url,r.body,r.image_id, u.user_id, u.user_name, 
                 co.occasion, ct.type, cs.diet, r.categ_occ_id, r.categ_types_id, r.categ_spec_id
                 FROM recipes r

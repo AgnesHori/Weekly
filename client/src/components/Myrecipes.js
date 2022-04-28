@@ -19,13 +19,12 @@ export const Myrecipes=({categ,userId})=> {
     let url=''
       if(selCateg === 0)
         url=`/recipes/user/${userId}`
-    else
+      else
         url=`/recipes/user/${userId}/categ/` + selCateg
-        
-        console.log('user:',userId,'kategória:',selCateg, url)
     try {
       const resp=await axios.get(url)
       setRecipes(resp.data)
+      console.log(url)
     } catch(err){
       console.log(err)
     }

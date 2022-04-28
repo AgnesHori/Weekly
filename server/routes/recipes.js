@@ -7,7 +7,7 @@ router.route('/user/:user_id').get(getUserRecipes)
 router.route('/:id').get(getRecipe)
 router.route('/ingredients/:id').get(getIngredients)
 router.route('/categ/:id').get(getRecipesFiltered)
-router.route('/:user_id/categ/:categ_id').get(getUserRecipesFiltered)
+router.route('user/:user_id/categ/:categ_id').get(getUserRecipesFiltered)
 router.route('/').post(createRecipe)
 
 router.route('/:id').put(updateRecipe)

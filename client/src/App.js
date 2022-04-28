@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 import "./App.css";
@@ -52,7 +52,7 @@ function App() {
 
   return (
     <ConfirmProvider>
-      <BrowserRouter>
+      <HashRouter>
         <TopBar user={user} userName={userName} recipes={recipes}/>
         <Routes>
           <Route path="/" element={<Home categ={categ} userId={userId} recipes={recipes} setRecipes={setRecipes}/>} />
@@ -67,7 +67,7 @@ function App() {
           <Route path="/confirm/:confirmationCode" element={<WelcomePage setUser={setUser}/>} />
           <Route path="/editRecipe/:recipeId" element={user? <EditRecipe userId={userId} categ={categ}/> : <Login/>} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
       </ConfirmProvider>
   );
 }
