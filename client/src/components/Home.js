@@ -3,7 +3,7 @@ import { Header } from './Header'
 import { Recipes } from './Recipes'
 import { Sidebar} from './Sidebar'
 import axios from 'axios'
-import { Slider } from './Carousel'
+import { Slider } from './Slider'
 
 export const Home=({categ,recipes,setRecipes})=> {
   const [selCateg, setSelCateg]=useState(0)
