@@ -1,20 +1,38 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 import axios from 'axios'
 import { validateImage } from "image-validator";
 import FileDrop from './FileDrop'
+import { IngredientsList } from './IngredientsList';
 
 
 
-export const Upload=({userId,categ})=> {
+export const Upload=({userId,categ, ingredient,setIngredient,ingredients,setIngredients})=> {
   const {register, handleSubmit,formState: { errors },reset} = useForm();
   const [recipeCateg,setRecipeCateg]=useState(0)
   const [successful,setSuccessFul]=useState(false)
   const [msg,setMsg] =useState('')
   const [selFile,setSelFile] = useState({})
+  const [allIngredients,setAllIngredients]=([])
 
   console.log(userId,categ)
   
+  useEffect(()=>{
+    fetchAllIngredients()
+  },[])
+
+  const fetchAllIngredients = async () => {
+    try {
+      const resp = await axios.get('/ingredients');
+      setAllIngredients(resp.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  console.log('Összes hozzávaló',allIngredients)
+
+
   const onSubmit = (data) =>{
     if(selFile.length>0)
         verify(data,selFile[0])
@@ -33,6 +51,7 @@ export const Upload=({userId,categ})=> {
     formData.append('user_id',fdata.user_id)
     formData.append('categ_occ_id',fdata.categ_occ_id)
     formData.append('body',fdata.body)
+
     try {
       const resp=await axios.post(url,formData) //küldjük az adatokat a formból a szerverre
       const data=await resp.data // megérkezik a válasz a serverről
@@ -65,7 +84,7 @@ console.log('A fájl mérete:',selFile.length>0 ? selFile[0].sizeReadable : 0)
 
                     <input type="text"  {...register("user_id")} hidden value={userId} />
                     
-                    <input disabled={recipeCateg==0 } type="submit" className="btn btn-dark m-2" value="Publikálás" />
+                    <input disabled={recipeCateg===0 } type="submit" className="btn btn-dark m-2" value="Publikálás" />
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -76,7 +95,10 @@ console.log('A fájl mérete:',selFile.length>0 ? selFile[0].sizeReadable : 0)
                   </div>
                   <div className="col-md-6">{msg}</div>
                 </div>
+
+                <IngredientsList ingredients={ingredients} setIngredients={setIngredients} ingredient={ingredient} setIngredient={setIngredient} />
                 <textarea  cols="30" rows="10" className="form-control"
+
                   {...register("body",{required:true})} placeholder="Ide írd le a receptedet!"></textarea>
                    <div className="err">{errors.body && <span>Recept feltöltése kötelező!</span>}</div>
             </form>

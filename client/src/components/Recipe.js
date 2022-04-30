@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MyImage } from "./MyImage";
 
 // a role button megvan, így kattintható lesz
-export const Recipe = ({recipes_id,title,image_url,body,user_name,occasion,type,diet,amount,ingredient,measurement,image_id }) => {
+export const Recipe = ({recipes_id,title,image_url,body,occasion,image_id }) => {
   const navigate=useNavigate()
   return (
     <div className="recipe">

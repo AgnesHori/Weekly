@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { TopBarSearch } from "./TopBarSearch";
 import avatar from './avatar.svg'
 
-export const TopBar = ({ user, userName,recipes }) => {
+export const TopBar = ({ user, userName,recipes,admin }) => {
   console.log('TopBar:',user,userName,recipes)
   return (
     <div>
@@ -29,8 +29,8 @@ export const TopBar = ({ user, userName,recipes }) => {
               <li className={userName.length>0 ? "nav-item" : "d-none"}>
                 <NavLink to="/myrecipes" className="nav-link" href="#">Receptjeim</NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/contact" className="nav-link " href="#">Kapcsolat</NavLink>
+              <li className={admin=true ? "nav-item" :"d-none"}>
+                <NavLink to="/admin" className="nav-link " href="#">Admin felület</NavLink>
               </li>
             </ul>
 

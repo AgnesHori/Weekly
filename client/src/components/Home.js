@@ -3,9 +3,9 @@ import { Header } from './Header'
 import { Recipes } from './Recipes'
 import { Sidebar} from './Sidebar'
 import axios from 'axios'
+import { Slider } from './Carousel'
 
 export const Home=({categ,recipes,setRecipes})=> {
-  
   const [selCateg, setSelCateg]=useState(0)
 
   useEffect(()=>{
@@ -27,15 +27,18 @@ export const Home=({categ,recipes,setRecipes})=> {
       console.log(err)
     }
   }
-
-  console.log(recipes)
-
+  console.log("home.js->recipes", recipes)
   return (
     <>
      <Header />
-     <div className="row">
-       <Recipes recipes={recipes} selCateg={selCateg}/>
-       <Sidebar categ={categ} setSelCateg={setSelCateg}/>
+     <div className="row">   
+        <div className="col-8">
+          <Slider recipes={recipes}/> 
+          <Recipes recipes={recipes} selCateg={selCateg}/>
+        </div>
+        <div className="col-4">
+          <Sidebar categ={categ} setSelCateg={setSelCateg}/>   
+        </div>
      </div>
     </>
   )

@@ -42,8 +42,9 @@ const getRecipe=(req,res)=>{
 
 const getIngredients=(req,res)=>{
     const {id}=req.params
+    console.log('recept id',id)
     db.query(`SELECT ri.amount, i.ingredient,i.measurement from recipes_ingr ri, ingredients i
-                WHERE ri.recipes_ingr_id=i.ingr_id
+                WHERE ri.ingr_id=i.ingr_id
                 AND ri.recipes_id=${id}`,(err,result)=>{
                 if(err) 
                     console.log(err)
@@ -51,6 +52,8 @@ const getIngredients=(req,res)=>{
                     res.status(200).send(result)
             })
 }
+
+
 
 const getRecipesFiltered=(req,res)=>{
     const {id}=req.params //categ_occ_id 
@@ -166,5 +169,6 @@ const getUserRecipesFiltered=(req,res) => {
             })
 
 }
+
 
 module.exports={getRecipes,getRecipe,getIngredients,getRecipesFiltered,createRecipe,updateRecipe,deleteRecipe,getUserRecipes,getUserRecipesFiltered}

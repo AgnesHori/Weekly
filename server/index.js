@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const recipes=require('./routes/recipes')
 const categ=require('./routes/categ')
 const auth=require('./routes/auth')
+const admin=require('./routes/admin')
 
 const app=express()
 app.use(cors())
@@ -20,6 +21,7 @@ app.use(morgan('dev'))
 app.use('/recipes',recipes)
 app.use('/categ',categ)
 app.use('/auth',auth)
+app.use('/admin',admin)
 //console.log(process.env)
 
 

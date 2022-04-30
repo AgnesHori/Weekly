@@ -8,8 +8,8 @@ export const SingleRecipe=({recipeId,userId,imageId})=> {
   const navigate = useNavigate()
   const confirm=useConfirm()
   const [recipe,setRecipe] = useState({})
-  const [ingredients, setIngredients] = useState([])
   const [msg,setMsg]=useState('')
+  const [ingredients,setIngredients]=useState([])
 
   useEffect(()=> {
     fetchRecipe()
@@ -32,8 +32,8 @@ export const SingleRecipe=({recipeId,userId,imageId})=> {
 
   const fetchIngredients = async () => {
     try {
-      const resp = await axios.get(url);
-      console.warn(resp);
+      const resp = await axios.get(`/recipes/ingredients/${recipeId}`);
+      console.log(url);
       setIngredients(resp.data);
     } catch (err) {
       console.log(err);
@@ -61,7 +61,7 @@ export const SingleRecipe=({recipeId,userId,imageId})=> {
       console.log(err)
     }
   }
-
+ console.log('serverről',ingredients)
   return (
     <div className="singleRecipe">
       <div className="p-3">
@@ -69,9 +69,9 @@ export const SingleRecipe=({recipeId,userId,imageId})=> {
         <h3 className="text-center m-2">
           {recipe.title}
           <div className="singleRecipeEdit text-end">
-            <i role="button" className={userId==recipe.user_id ? "fa-solid fa-pen-to-square text-success" : "d-none"}
+            <i role="button" className={userId===recipe.user_id ? "fa-solid fa-pen-to-square text-success" : "d-none"}
               onClick={()=>navigate('/editRecipe/'+recipe.recipes_id)}></i>
-            <i role="button" className={userId==recipe.user_id? "fa-solid fa-trash-can ms-3 text-danger" : "d-none"}
+            <i role="button" className={userId===recipe.user_id? "fa-solid fa-trash-can ms-3 text-danger" : "d-none"}
               onClick={()=>handleDelete()}></i>
           </div>
         </h3>
@@ -80,10 +80,8 @@ export const SingleRecipe=({recipeId,userId,imageId})=> {
           <span className="singleRecipeAuthor">{recipe.user_name}</span>
           <span className="singelRecipeDate">{recipe.created_at}</span>
         </div>
-        <h5 className={ingredients.length>0 ? "hozzavalo" : "d-none"}>Hozzávalók:</h5>
-          {ingredients.map((obj, index)=>
-              <p key={index}><span className="ingredients">{obj.ingredient}</span> {obj.amount} {obj.measurement}</p>
-          )}
+        <h5 className={ingredients===0 ? "hozzavalo" : "d-none"}>Hozzávalók:</h5>
+          {ingredients.map((obj, index)=><p key={index}><span className="ingredients">{obj.ingredient}</span> {obj.amount} {obj.measurement}</p>)}
         <p className="mt-1 recipeDescriptionSingle">{recipe.body}</p>
       </div>
     </div>

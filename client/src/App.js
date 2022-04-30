@@ -6,7 +6,6 @@ import "./App.css";
 import { TopBar } from "./components/TopBar";
 import { Home } from "./components/Home";
 //import { SingleRecipe } from "./components/SingleRecipe";
-import { Contact } from "./components/Contact";
 import { Upload } from "./components/Upload";
 import { Register } from "./components/Register";
 import { Settings } from "./components/Settings";
@@ -17,6 +16,7 @@ import { Single } from "./components/Single";
 import { WelcomePage } from "./components/WelcomePage";
 import { EditRecipe } from "./components/EditRecipe";
 import { Myrecipes } from "./components/Myrecipes";
+import { Admin } from "./components/Admin";
 import axios from "axios";
 import {ConfirmProvider} from 'material-ui-confirm'
 
@@ -26,6 +26,9 @@ function App() {
   const [userName, setUserName] = useState(localStorage.getItem('userName')?localStorage['userName']:'');
   const [userId, setUserId] = useState(localStorage.getItem('userId')?localStorage['userId']:0);
   const [recipes,setRecipes]=useState([])
+  const [ingredient,setIngredient]=useState('')
+
+
 
   useEffect(()=>{
     fetchCateg()
@@ -49,7 +52,7 @@ function App() {
     }
   }
 
-
+  
   return (
     <ConfirmProvider>
       <HashRouter>
@@ -58,12 +61,15 @@ function App() {
           <Route path="/" element={<Home categ={categ} userId={userId} recipes={recipes} setRecipes={setRecipes}/>} />
           <Route path="/myrecipes" element={<Myrecipes categ={categ} userId={userId} />} />
           <Route path="/recipes/:recipeId/:imageId" element={<Single categ={categ} userId={userId} />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/upload" element={userName ? <Upload userId={userId} categ={categ} /> : <Register />} />
+          <Route path="/admin" element={<Admin admin={true} />} />
+          <Route path="/upload" element={userName ? <Upload userId={userId} categ={categ} ingredient={ingredient}
+            setIngredient={setIngredient} /> : <Register />} />
           <Route path="/settings" element={user ? <Settings /> : <Register />}/>
-          <Route path="/login" element={ userName ? <Home categ={categ} recipes={recipes} setRecipes={setRecipes} /> : <Login setUser={setUser} setUserName={setUserName} setUserId={setUserId}/>} />
+          <Route path="/login" element={ userName ? <Home categ={categ} recipes={recipes} setRecipes={setRecipes} /> :
+            <Login setUser={setUser} setUserName={setUserName} setUserId={setUserId}/>} />
           <Route path="/register" element={userName ? <Home  categ={categ} recipes={recipes} setRecipes={setRecipes} /> : <Register />} />
-          <Route path="/logout" element={<Logout categ={categ} setUser={setUser} setUserName={setUserName} setUserId={setUserId} recipes={recipes} setRecipes={setRecipes} />} />
+          <Route path="/logout" element={<Logout categ={categ} setUser={setUser} setUserName={setUserName}
+            setUserId={setUserId} recipes={recipes} setRecipes={setRecipes} />} />
           <Route path="/confirm/:confirmationCode" element={<WelcomePage setUser={setUser}/>} />
           <Route path="/editRecipe/:recipeId" element={user? <EditRecipe userId={userId} categ={categ}/> : <Login/>} />
         </Routes>
