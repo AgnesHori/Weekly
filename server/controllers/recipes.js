@@ -87,7 +87,7 @@ const createRecipe=async (req,res)=>{
     console.log(actualDate)
     db.query('insert into recipes (user_id,title,categ_occ_id,body,image_url,created_at,image_id) values (?,?,?,?,?,?,?)',
         [user_id,title,categ_occ_id,body,cloudFile.url,actualDate,cloudFile.public_id],
-        (err,result)=>{ //vessző után callback fv., megmondjuk, hogy mi történjen az insert után
+        (err,result)=>{ 
             if(err){
                 console.log('Hiba a beszúrásban:',err)
                 res.send({message:`Hiba a feltöltésben:${err}`})

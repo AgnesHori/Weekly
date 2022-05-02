@@ -15,3 +15,5 @@ router.route('/:id/:imageId').delete(deleteRecipe)
 
 
 module.exports=router
+
+

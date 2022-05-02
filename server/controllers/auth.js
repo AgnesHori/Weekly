@@ -8,7 +8,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const bcrypt = require('bcryptjs')
 const saltRounds=10
 
-//az űrlap elemek érkeznek (objektumok)
 const register=(req,res)=>{
     console.log('post kérés',req.body)
     const {user_name,email,password}=req.body
@@ -26,7 +25,6 @@ const register=(req,res)=>{
             }
             if(result){
                 console.log('Sikeres beszúrás',result.insertId)
-                //itt történik a mail küldés
                 const msg = {
                     to: email,
                     from: process.env.VERIFIED_EMAIL, 
@@ -35,7 +33,6 @@ const register=(req,res)=>{
                     html: `<p>Fiókod aktiválásához kattints ide: <strong><a href="https://weeklyrecipes.herokuapp.com/#/confirm/
                     ${token}">Aktiválás</a></strong>`,
                   };
-                  //ES8
                   (async () => {
                     try {
                       await sgMail.send(msg);
@@ -108,12 +105,11 @@ const verifyUser=(req,res)=>{
                 res.send({message:`Error-activation failed:${err}`})
             }
             if(result){
-                console.log('Sikeres fiok aktiválás!')
-                res.send({message:"Sikeres fiok aktiválás!"})  
+                console.log('Sikeres fiók aktiválás!')
+                res.send({message:"Sikeres fiók aktiválás!"})  
             }
         })     
     });
-
 }
 
 

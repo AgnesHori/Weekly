@@ -41,7 +41,7 @@ class FileDrop extends React.Component {
                 clickable
               >
             <div className="drop-holder d-flex align-items-center">
-                 <div className="btn btn-outline-dark drop-btn" onClick={() => this.props.setMsg('')}>Drop images here</div>
+                 <div className="btn btn-outline-dark drop-btn" onClick={() => this.props.setMsg('')}>Kép kiválasztása</div>
                 {this.state.files.length > 0 && (
                     <div className='files-gallery d-flex'>
                         {this.state.files.map((file) =>

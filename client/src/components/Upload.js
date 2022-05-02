@@ -3,21 +3,21 @@ import {useForm} from 'react-hook-form'
 import axios from 'axios'
 import { validateImage } from "image-validator";
 import FileDrop from './FileDrop'
-import { IngredientsList } from './IngredientsList';
+
 
 
 
 export const Upload=({userId,categ})=> {
-  const {register, handleSubmit,formState: { errors },reset} = useForm();
+  const {register, handleSubmit,formState: { errors },reset}=useForm();
   const [recipeCateg,setRecipeCateg]=useState(0)
   const [successful,setSuccessFul]=useState(false)
-  const [msg,setMsg] =useState('')
-  const [selFile,setSelFile] = useState({})
+  const [msg,setMsg]=useState('')
+  const [selFile,setSelFile]=useState({})
 
   const [allIngredients,setAllIngredients]=useState([])
   const [amount,setAmount]=useState('')
-  const [inglist,setInglist] =useState([])
-  const [ing,setIng] =useState('')
+  const [inglist,setInglist]=useState([])
+  const [ing,setIng]=useState('')
   const [ingName,setIngName]=useState('')
 
   console.log(userId,categ)
@@ -25,7 +25,6 @@ export const Upload=({userId,categ})=> {
   useEffect(()=>{
     fetchAllIngredients()
   },[])
-
 
 
   const fetchAllIngredients = async () => {
@@ -48,22 +47,21 @@ export const Upload=({userId,categ})=> {
   const verify=async (data,file)=>{
     console.log('verify:',file)
     const isValidImage = await validateImage(file);
-    isValidImage && sendData('/recipes',data) //amikor megvan a válasz csak akkor menjen a kérés a serverre
+    isValidImage && sendData('/recipes',data)            //amikor megvan a válasz csak akkor menjen a kérés a serverre
   }
   
   const sendData=async (url, fdata) =>{
     const formData=new FormData()
-    formData.append('image_url',selFile[0]) // az Upload oldalon kitöltött adatok a user által
+    formData.append('image_url',selFile[0])                // az Upload oldalon kitöltött adatok a user által
     formData.append('title',fdata.title)
     formData.append('user_id',fdata.user_id)
     formData.append('categ_occ_id',fdata.categ_occ_id)
     formData.append('body',fdata.body)
-    //const ingListJson=JSON.stringify({ingredinetlist:inglist})
     formData.append('inglist',JSON.stringify(inglist))
 
     try {
-      const resp=await axios.post(url,formData) //küldjük az adatokat a formból a szerverre
-      const data=await resp.data // megérkezik a válasz a serverről
+      const resp=await axios.post(url,formData)                       //küldjük az adatokat a formból a szerverre
+      const data=await resp.data                                      // megérkezik a válasz a serverről
       console.log(data)
       setMsg(data.message)
       resp.status===200 ? setSuccessFul(true):setSuccessFul(false)
@@ -75,7 +73,7 @@ export const Upload=({userId,categ})=> {
 
   const handleChange=(id)=>{
     let arr=allIngredients.filter(obj=>obj.ingr_id==id)
-    setIngName(arr[0].ingredient +' '+arr[0].measurement)
+    setIngName(arr[0].ingredient + ' ' + arr[0].measurement)
     setIng(id)
   }
 
@@ -85,7 +83,6 @@ export const Upload=({userId,categ})=> {
     obj.amount=amount
     obj.name=ingName
     setInglist([...inglist,obj])
-
   }
 
   const handleDeleteIng=(id)=>{
@@ -96,9 +93,9 @@ export const Upload=({userId,categ})=> {
 
 
 
-console.log(inglist)
-console.log('selFile=',selFile)
-console.log('A fájl mérete:',selFile.length>0 ? selFile[0].sizeReadable : 0)
+  console.log(inglist)
+  console.log('selFile=',selFile)
+  console.log('A fájl mérete:',selFile.length>0 ? selFile[0].sizeReadable : 0)
 
 
   return (
@@ -141,7 +138,7 @@ console.log('A fájl mérete:',selFile.length>0 ? selFile[0].sizeReadable : 0)
                 <div className='d-flex w-100'>
                   <ul>
                     {inglist.map(obj=>
-                      <li key={obj.ing}>{obj.name}-{obj.amount}<i id={obj.ing} className="fa-solid fa-trash-can ms-3 text-danger" onClick={(e)=>handleDeleteIng(e.target.id)}></i></li>
+                      <li key={obj.ing}>{obj.name}: {obj.amount}<i id={obj.ing} className="fa-solid fa-trash-can ms-3 text-danger" onClick={(e)=>handleDeleteIng(e.target.id)}></i></li>
                       )}
                   </ul>
                 </div>
