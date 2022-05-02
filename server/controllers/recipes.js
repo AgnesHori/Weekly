@@ -72,7 +72,9 @@ const getRecipesFiltered=(req,res)=>{
 
 const createRecipe=async (req,res)=>{
     console.log(req.body)
-    const {title, categ_occ_id,body, user_id}=req.body
+    const {title, categ_occ_id,body, user_id,inglist}=req.body
+    for (let obj of JSON.parse(inglist))
+    console.log(obj)
     const {image_url}=req.files
     const fileTypes=['image/jpeg','image/png','image/jpg']
     const fileSize=1024
@@ -92,7 +94,17 @@ const createRecipe=async (req,res)=>{
             }
             if(result){
                 console.log('Sikeres feltöltés:',result.insertId)
-                res.send({message:`Sikeres publikálás!`})
+                let sql=''
+                for (let obj of JSON.parse(inglist))
+                    sql+=`insert into recipes_ingr (ingr_id,recipes_id,amount) values (${obj.ing}, ${result.insertId},${obj.amount});`
+                db.query(sql,(err,result)=>{
+                    if(err)
+                        console.log('hiba a hozzávalók beszúrásában',err)
+                    if(result)
+                        res.send({message:`Sikeres publikálás!`})
+                }
+                )
+
             }
         }
     )

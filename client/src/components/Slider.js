@@ -16,9 +16,9 @@ export const Slider=({recipes})=>{
     <Carousel activeIndex={index} onSelect={handleSelect} className="mt-3">
       {recipes.map((obj,index)=>
       <Carousel.Item key={index}>
-        <img className="d-block w-100" src={obj.image_url} alt="First slide"/>
+        <img className="d-block w-100 rounded" src={obj.image_url} alt="First slide"/>
         <Carousel.Caption>
-          <h3>{recipes.title}</h3>
+          <h3>{obj.title}</h3>
         </Carousel.Caption>
       </Carousel.Item>
       )}

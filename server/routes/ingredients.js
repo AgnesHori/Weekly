@@ -3,6 +3,6 @@ const router=express.Router()
 
 const {getAllIngredients}=require('../controllers/ingredients')
 
-router.route('/ingredients').get(getAllIngredients)
+router.route('/').get(getAllIngredients)
 
 module.exports=router

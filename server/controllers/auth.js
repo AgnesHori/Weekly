@@ -29,7 +29,7 @@ const register=(req,res)=>{
                 //itt történik a mail küldés
                 const msg = {
                     to: email,
-                    from: process.env.VERIFIED_EMAIL, // Use the email address or domain you verified above
+                    from: process.env.VERIFIED_EMAIL, 
                     subject: 'Regisztráció aktiválása ',
                     text: 'Kattints az aktiváló linkre!',
                     html: `<p>Fiókod aktiválásához kattints ide: <strong><a href="https://weeklyrecipes.herokuapp.com/#/confirm/
@@ -56,7 +56,7 @@ const register=(req,res)=>{
 const login=(req,res)=>{
     console.log('post....',req.body)
     const {email,password} =  req.body
-    db.query('select user_id,password,user_name,status from users where email=?',[email],(err,result) => {
+    db.query('select user_id,password,user_name,role,status from users where email=?',[email],(err,result) => {
         if(err)
             res.send({"error":err})
         if(result.length==1){
@@ -64,7 +64,7 @@ const login=(req,res)=>{
                 (error,resultCompare) => {
                     if(resultCompare)
                         if(result[0].status=='active')
-                            res.send({message:"Sikeres bejelentkezés!", username:result[0].user_name,userId:result[0].user_id})
+                            res.send({message:"Sikeres bejelentkezés!", username:result[0].user_name,userId:result[0].user_id,role:result[0].role})
                         else
                             res.status(401).send({message:"Bejelentkezés előtt aktiváld a regisztárciód az emailben küldött linken!"})
                     else
@@ -101,8 +101,8 @@ const verifyUser=(req,res)=>{
             res.status(404).send({message:`Error-activation failed:${error}`})
         if(results.nr===0)
             res.status(404).send({ message: "User Not found." });
-        //update: pending->active
-        db.query('update users set status=? where confirmationCode=?',['active',confirmationCode],(err,result)=>{    //this is a callback function :what we want to do after insert
+        //pending->active
+        db.query('update users set status=? where confirmationCode=?',['active',confirmationCode],(err,result)=>{    
             if(err){
                 console.log(`Error-activation failed:${err}`)
                 res.send({message:`Error-activation failed:${err}`})

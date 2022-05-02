@@ -8,6 +8,7 @@ const recipes=require('./routes/recipes')
 const categ=require('./routes/categ')
 const auth=require('./routes/auth')
 const admin=require('./routes/admin')
+const ingredients=require('./routes/ingredients')
 
 const app=express()
 app.use(cors())
@@ -22,6 +23,7 @@ app.use('/recipes',recipes)
 app.use('/categ',categ)
 app.use('/auth',auth)
 app.use('/admin',admin)
+app.use('/ingredients',ingredients)
 //console.log(process.env)
 
 

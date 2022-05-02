@@ -2,14 +2,16 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { useConfirm } from 'material-ui-confirm'
 
-export const Admin=(admin,userId)=> {
+export const Admin=({admin,userId})=> {
   const [users,setUsers]=useState([])
   const confirm=useConfirm()
-  const [msg,setMsg]=useState('')
+  const [msg,setMsg]=useState('x')
+
+  console.log(msg)
 
   useEffect(()=>{
     fetchUsers()
-  },[setUsers])
+  },[users,msg])
 
   const fetchUsers=async ()=>{
     try{
@@ -33,12 +35,12 @@ export const Admin=(admin,userId)=> {
     console.log('user_id',user_id)
     try{
       const resp=await axios.delete(`/admin/${user_id}`)
-      setMsg('Sikeres törlés!')
+      console.log(resp.data)
+      setMsg(resp.data.message)
     }catch(err){
       console.log(err)
     }
   }
-
   return (
     <div className='admin'>
       <div className='container text-center bg-white'>

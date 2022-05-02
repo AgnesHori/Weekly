@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 
 
-export const Login=({setUser,setUserName,setUserId})=> {
+export const Login=({setUser,setUserName,setUserId,setAdmin})=> {
   const {register, handleSubmit,formState: { errors },} = useForm();
   const [successful,setSuccessful]=useState(false)
   const [msg,setMsg]=useState('')
@@ -27,6 +27,11 @@ export const Login=({setUser,setUserName,setUserId})=> {
       setSuccessful(true)
       setUserName(data.username)
       setUserId(data.userId)
+      console.log('Role?',data.role)
+      if (data.role=='admin')
+        setAdmin(true)
+      else
+        setAdmin(false)
       console.log('login',data.username)
     }catch(err){
         console.log(err.message)
@@ -50,7 +55,7 @@ export const Login=({setUser,setUserName,setUserId})=> {
         {errors.email && <p className="err">Az email cím megadása kötelelező!</p>}
         <input type="password" {...register('password', { required: true })} className="form-control mb-1"  />
         {errors.password && <p className="err">Hibás jelszó!</p>}
-        <input type="submit" className="btn btn-success form-control rounded"/>
+        <input type="submit" className="btn btn-dark form-control rounded"/>
     </form>
     <div>{msg}</div>
   </div>

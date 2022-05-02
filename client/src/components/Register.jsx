@@ -68,14 +68,14 @@ useEffect (()=>{
               className={validUsername ? "form-control mb-1" : "form-control mb-1 border border-danger"}
               placeholder="Felhasználónév"
               onBlur={(e)=>checkUsername(e)}/>
-              {errors.userName && <p className="err">A felhasználónév megadása kötelező!</p>}
+              {errors.userName && <p className="err">Felhasználónév megadása kötelező!</p>}
           <input {...register('email', { required: true })} className="form-control mb-1" placeholder="Email cím"
               onBlur={(e)=>checkEmail(e)}/>
-              {errors.email && <p className="err">Az email cím megadása kötelelező!</p>}
-          <input type="password" {...register('password', { required: true })} className="form-control mb-1"  />
-          {errors.password && <p className="err">Hibás jelszó!</p>}
+              {errors.email && <p className="err">Email cím megadása kötelelező!</p>}
+          <input type="password" {...register('password', { required: true })} className="form-control mb-1" placeholder="Jelszó"  />
+          {errors.password && <p className="err">Jelszó megadása kötelelező!!</p>}
           <input type="submit" 
-            className={validUsername&&validEmail? "btn btn-success form-control rounded":"btn btn-danger form-control rounded" }
+            className={validUsername&&validEmail? "btn btn-dark form-control rounded":"btn btn-danger form-control rounded" }
             disabled={!validUsername || !validEmail}/>
       </form>
       <div>{msg}</div>

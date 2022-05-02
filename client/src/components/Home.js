@@ -31,13 +31,15 @@ export const Home=({categ,recipes,setRecipes})=> {
   return (
     <>
      <Header />
-     <div className="row">   
-        <div className="col-8">
-          <Slider recipes={recipes}/> 
-          <Recipes recipes={recipes} selCateg={selCateg}/>
-        </div>
-        <div className="col-4">
-          <Sidebar categ={categ} setSelCateg={setSelCateg}/>   
+     <div className="row">     
+        <div className="col-12">
+          <div className="slider-container">
+            <Slider recipes={recipes}/>
+          </div> 
+          <div className="col-12">
+            <Sidebar categ={categ} setSelCateg={setSelCateg}/>   
+            <Recipes recipes={recipes} selCateg={selCateg}/>
+          </div>          
         </div>
      </div>
     </>

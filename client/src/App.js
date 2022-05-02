@@ -27,6 +27,7 @@ function App() {
   const [userId, setUserId] = useState(localStorage.getItem('userId')?localStorage['userId']:0);
   const [recipes,setRecipes]=useState([])
   const [ingredient,setIngredient]=useState('')
+  const [admin,setAdmin]=useState(localStorage.getItem('admin')?localStorage['admin']:false)
 
 
 
@@ -38,7 +39,8 @@ function App() {
     localStorage.setItem('user',user)
     localStorage.setItem('userName',userName)
     localStorage.setItem('userId',userId)
-  },[user,userName,userId])
+    localStorage.setItem('admin',admin)
+  },[user,userName,userId,admin])
 
 
   const fetchCateg=async () => {
@@ -56,7 +58,7 @@ function App() {
   return (
     <ConfirmProvider>
       <HashRouter>
-        <TopBar user={user} userName={userName} recipes={recipes}/>
+        <TopBar user={user} userName={userName} recipes={recipes} admin={admin}/>
         <Routes>
           <Route path="/" element={<Home categ={categ} userId={userId} recipes={recipes} setRecipes={setRecipes}/>} />
           <Route path="/myrecipes" element={<Myrecipes categ={categ} userId={userId} />} />
@@ -66,10 +68,10 @@ function App() {
             setIngredient={setIngredient} /> : <Register />} />
           <Route path="/settings" element={user ? <Settings /> : <Register />}/>
           <Route path="/login" element={ userName ? <Home categ={categ} recipes={recipes} setRecipes={setRecipes} /> :
-            <Login setUser={setUser} setUserName={setUserName} setUserId={setUserId}/>} />
+            <Login setUser={setUser} setUserName={setUserName} setUserId={setUserId} setAdmin={setAdmin}/>} />
           <Route path="/register" element={userName ? <Home  categ={categ} recipes={recipes} setRecipes={setRecipes} /> : <Register />} />
           <Route path="/logout" element={<Logout categ={categ} setUser={setUser} setUserName={setUserName}
-            setUserId={setUserId} recipes={recipes} setRecipes={setRecipes} />} />
+            setUserId={setUserId} recipes={recipes} setRecipes={setRecipes} setAdmin={setAdmin} />} />
           <Route path="/confirm/:confirmationCode" element={<WelcomePage setUser={setUser}/>} />
           <Route path="/editRecipe/:recipeId" element={user? <EditRecipe userId={userId} categ={categ}/> : <Login/>} />
         </Routes>
