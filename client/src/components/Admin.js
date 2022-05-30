@@ -5,13 +5,12 @@ import { useConfirm } from 'material-ui-confirm'
 export const Admin=({admin,userId})=> {
   const [users,setUsers]=useState([])
   const confirm=useConfirm()
-  const [msg,setMsg]=useState('x')
+  const [msg,setMsg]=useState('')
 
-  console.log(msg)
 
   useEffect(()=>{
     fetchUsers()
-  },[users,msg])
+  },[msg])
 
   const fetchUsers=async ()=>{
     try{
@@ -58,7 +57,6 @@ export const Admin=({admin,userId})=> {
               <td>status</td>
               <td></td>
             </tr>
-            {console.log(users)}
           {users.map((obj, index) => <tr><td>{index + 1}</td><td>{obj.user_id}</td><td>{obj.user_name}</td>
               <td>{obj.email}</td><td>{obj.role}</td><td>{obj.status}</td><td><button className="btn button fa-solid fa-trash-can ms-3 text-danger" onClick={()=>handleDelete(obj.user_id)}></button></td></tr>)}
             </tbody>

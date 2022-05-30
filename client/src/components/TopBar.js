@@ -5,7 +5,7 @@ import avatar from './avatar.svg'
 
 export const TopBar = ({ user, userName,recipes,admin }) => {
   console.log('TopBar:',user,userName,recipes)
-  console.log('Topbar',admin)
+  console.log('TopBar',admin)
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,7 +30,7 @@ export const TopBar = ({ user, userName,recipes,admin }) => {
               <li className={userName.length>0 ? "nav-item" : "d-none"}>
                 <NavLink to="/myrecipes" className="nav-link" href="#">Receptjeim</NavLink>
               </li>
-              <li className={admin ? "nav-item" :"d-none"}>
+              <li className={admin===true ? "nav-item" :"d-none"}>
                 <NavLink to="/admin" className="nav-link " href="#">Admin felület</NavLink>
               </li>
             </ul>

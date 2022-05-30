@@ -57,12 +57,13 @@ const getIngredients=(req,res)=>{
 
 const getRecipesFiltered=(req,res)=>{
     const {id}=req.params //categ_occ_id 
-    db.query(`SELECT r.recipes_id,r.title,r.image_url,r.body, u.user_name, co.occasion, ct.type, cs.diet, r.categ_occ_id, r.categ_types_id, r.categ_spec_id
-                FROM users u, categ_occ co, categ_types ct, categ_special cs, recipes r
-                WHERE u.user_id=r.user_id
-                AND co.categ_occ_id=r.categ_occ_id and ct.categ_types_id=r.categ_types_id
-                AND cs.categ_special_id=r.categ_spec_id
-                AND r.categ_occ_id=${id}`,(err,results)=>{
+    db.query(`SELECT r.recipes_id, r.title,r.image_url,r.body, u.user_name, co.occasion, ct.type, cs.diet, r.categ_occ_id, r.categ_types_id, r.categ_spec_id 
+                FROM recipes r
+                left join categ_occ co ON r.categ_occ_id = co.categ_occ_id
+                left join categ_types ct ON ct.categ_types_id = r.categ_types_id
+                left join categ_special cs ON cs.categ_special_id = r.categ_spec_id
+                left join users u ON u.user_id = r.user_id
+                where r.categ_occ_id =${id}`,(err,results)=>{
                 if(err) 
                     console.log(err)
                 else

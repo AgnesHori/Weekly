@@ -10,3 +10,4 @@ router.route('/checkEmail').post(checkEmail)
 router.route('/confirm/:confirmationCode').get(verifyUser)
 
 module.exports=router
+

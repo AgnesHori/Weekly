@@ -12,7 +12,6 @@ export const Home=({categ,recipes,setRecipes})=> {
     fetchRecipes()
   },[selCateg])
 
-
   const fetchRecipes=async ()=>{
     let url=''
       if(selCateg === 0)

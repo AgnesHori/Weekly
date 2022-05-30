@@ -17,8 +17,10 @@ import { WelcomePage } from "./components/WelcomePage";
 import { EditRecipe } from "./components/EditRecipe";
 import { Myrecipes } from "./components/Myrecipes";
 import { Admin } from "./components/Admin";
+import { Footer } from "./components/Footer";
 import axios from "axios";
 import {ConfirmProvider} from 'material-ui-confirm'
+
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem('user')?localStorage['user']:false);
@@ -63,7 +65,7 @@ function App() {
           <Route path="/" element={<Home categ={categ} userId={userId} recipes={recipes} setRecipes={setRecipes}/>} />
           <Route path="/myrecipes" element={<Myrecipes categ={categ} userId={userId} />} />
           <Route path="/recipes/:recipeId/:imageId" element={<Single categ={categ} userId={userId} />} />
-          <Route path="/admin" element={<Admin admin={true} />} />
+          <Route path="/admin" element={<Admin admin={false} />} />
           <Route path="/upload" element={userName ? <Upload userId={userId} categ={categ} ingredient={ingredient}
             setIngredient={setIngredient} /> : <Register />} />
           <Route path="/settings" element={user ? <Settings /> : <Register />}/>
@@ -75,9 +77,15 @@ function App() {
           <Route path="/confirm/:confirmationCode" element={<WelcomePage setUser={setUser}/>} />
           <Route path="/editRecipe/:recipeId" element={user? <EditRecipe userId={userId} categ={categ}/> : <Login/>} />
         </Routes>
+          <Footer/>
       </HashRouter>
       </ConfirmProvider>
   );
+
+
+
 }
+
+
 
 export default App;

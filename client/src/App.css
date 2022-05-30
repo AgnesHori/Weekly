@@ -44,11 +44,11 @@
 }
 .ingredients{
   display: inline-block;
-  width: 120px;
+  width: 150px;
 }
 
 .sidebar {
-  flex: 3; /*a side szélességét határozza meg*/
+  flex: 3;
 }
 
 .sidebarlist {
@@ -158,6 +158,8 @@
   max-height: 35px;
 }
 
+/*Admin*/
+
 .admin{
   background-image: url(../public/img/Register.jpg);
   height: 100vw;
@@ -166,11 +168,33 @@
   background-repeat: no-repeat
 }
 
+/*Slider*/
+
 .slider-container {
   width: 40%;
   margin: 0px auto 35px;
 }
 
+/*Footer*/
 
+.row {
+  margin: auto 0px;
+}
 
+.footer {
+  margin-bottom: 15px;
+}
+.footer .col-md-4 .widget {
+  padding: 15px;
+  border: 1px dotted #ccc;
+  min-height: 236px;
+}
+.footer .col-md-4 .widget img {
+  margin: 0px auto;
+  display: block;
+  max-height: 204px;
+}
+.footer a{
+  color: grey;
+}
 
