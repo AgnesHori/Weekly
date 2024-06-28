@@ -9,7 +9,7 @@ return (
         <div className="menu-footer-menu-container">
         <h5 className="mb-3">Készítette:</h5>
         <h6>Hóri Ágnes</h6>
-        <a href="mailto:agneshori@gmail.com">agneshori@gmail.com</a>
+        <a href="mailto:horiagnes@gmail.com">horiagnes@gmail.com</a>
         </div>
     </div>
     </div>
